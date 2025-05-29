@@ -20,8 +20,8 @@ This Python application logs the `UserProfile` and `MinerProfile` storage items 
 If the code is hosted in a repository, clone it to your local machine:
 
 ```bash
-git clone <repository-url>
-cd <repository-directory>
+git clone https://github.com/thenervelab/pinning-service.git
+cd pinning-service
 ```
 
 Alternatively, save the provided `main.py` file to a directory of your choice.
@@ -93,15 +93,3 @@ kubectl apply -f ipfs-deployment.yaml
 kubectl apply -f ipfs-service.yaml
 kubectl apply -f profile-pinner-deployment.yaml
 ```
-
----
-
-## Notes
-
-- The application assumes a block time of approximately 6 seconds. Adjust the sleep interval in the code if your chain uses a different block time.
-- Logs are stored in `pallet_storage.log` and can grow large over time. Consider implementing log rotation for long-running instances.
-- If you have a custom `utils.bounded_vec_to_string` function (as referenced in the original code snippet), integrate it into the `bounded_vec_to_string` method in `main.py`.
-
----
-
-For further assistance, contact the developer or refer to the [substrate-interface documentation](https://github.com/polkascan/py-substrate-interface).
