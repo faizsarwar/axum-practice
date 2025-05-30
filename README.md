@@ -1,95 +1,129 @@
-# IPFS Pallet Storage Logger
+# Hippius Network: The Next-Generation Decentralized Infrastructure
 
-This Python application logs the `UserProfile` and `MinerProfile` storage items from the `IPFSPallet` on a Substrate-based blockchain every 5 blocks. It uses the `substrate-interface` library to interact with the blockchain and logs the results to both the console and a file.
+## 🌐 Project Overview
 
----
+Hippius Network is an advanced blockchain platform built on Substrate, designed to revolutionize decentralized computing with innovative reward mechanisms, robust governance, and multi-dimensional value creation.
 
-## Prerequisites
+## 🔑 Key Features
 
-- **Python**: Version 3.8 or higher  
-- **Substrate Node**: Access to a running Substrate node with the `IPFSPallet` pallet, accessible via WebSocket (e.g., `wss://rpc.hippius.network`)
-- **pip**: Python package manager  
-- **Git**: Optional, for cloning the repository
+### 💡 Unique Reward Distribution Model
 
----
+#### Reward Allocation Breakdown
+- **Staking Rewards**: 20% of Marketplace Revenue
+- **Ranking Rewards**: 70% of Marketplace Revenue
+  - Split equally between two ranking pallets
+- **Treasury**: 10% of Marketplace Revenue
 
-## Setup Instructions
+#### Validator Reward Mechanism
+1. **Era-Based Distribution**
+   - Rewards calculated and distributed every 6-hour era
+   - Proportional allocation based on validator performance and stake
 
-### 1. Clone the Repository (Optional)
+2. **Reward Calculation**
+   - Base reward from marketplace economic activity
+   - Performance-based multipliers
+   - Stake-weighted distribution
 
-If the code is hosted in a repository, clone it to your local machine:
+### 🏦 Economic Model
+- **Minimum Validator Stake**: Configurable
+- **Maximum Active Validators**: 1000
+- **Nomination Mechanism**: Flexible staking with up to 16 nominations per account
+
+### 🔒 Consensus & Security
+- **Consensus Algorithm**: Proof-of-Stake (PoS)
+- **Block Finality**: GRANDPA Finality Gadget
+- **Validator Selection**: Adaptive NPoS (Nominated Proof-of-Stake)
+
+## 🚀 Technical Specifications
+
+### Network Parameters
+- **Network Type**: Substrate-based Blockchain
+- **Token Decimals**: 18
+- **Era Duration**: 6 hours
+- **Bonding Period**: 28 days
+- **Unbonding Period**: 28 days
+- **Slash Defer Duration**: 27 days
+
+### Validator Requirements
+1. **Minimum Stake**
+   - Initial Validator Stake: Configurable
+   - Recommended Minimum: [Specify Exact Amount]
+
+2. **Performance Metrics**
+   - Uptime Tracking
+   - Slashing for Malicious Behavior
+   - Rewards Proportional to Consistent Performance
+
+## 💰 Economic Incentives
+
+### Reward Distribution Workflow
+
+Marketplace Revenue (100%) ├── Staking Rewards (20%) │ └── Distributed among Active Validators ├── Ranking Rewards (70%) │ ├── Ranking Pallet 1 (35%) │ └── Ranking Pallet 2 (35%) └── Treasury (10%)
+
+
+
+### Validator Reward Calculation
+1. **Base Reward Calculation**
+   - Total Era Revenue
+   - Number of Active Validators
+   - Individual Validator Performance
+
+2. **Reward Components**
+   - Base Stake Reward
+   - Performance Bonus
+   - Consistency Multiplier
+
+### 🛡️ Risk Management
+- **Slashing Mechanism**
+  - Penalties for Validator Misbehavior
+  - Progressive Slashing Rates
+- **Minimum Performance Threshold**
+
+## 📦 Installation & Setup
+
+### Prerequisites
+- Rust (latest stable)
+- Substrate Development Environment
+- Minimum Hardware:
+  - CPU: 4 cores
+  - RAM: 16GB
+  - Storage: 500GB SSD
+  - Bandwidth: 100 Mbps
+
+
+### Quick Start
+```bash
+# Clone Repository
+git clone https://github.com/thenervelab/thebrain.git
+cd thebrain
+
+# Install Dependencies
+rustup update
+rustup component add rust-src
+cargo build --release
+
+# Start Node
+./target/release/hippius-node 
+
+### 🐳 Docker Quick Start
+
+> **Note:**  
+> - Ensure the `hippius-node` binary is present in the project root **before** building the Docker image.  
+> - Double-check that the keystore path and network file path are correct for your setup **before running** the container.
 
 ```bash
-git clone https://github.com/thenervelab/pinning-service.git
-cd pinning-service
-```
+# Build Docker Image
+docker build -t hippius-node .
 
-Alternatively, save the provided `main.py` file to a directory of your choice.
+# Set permissions for data directory
+sudo chown -R $USER:$USER /opt/hippius/data
+chmod -R 777 /opt/hippius/data
 
----
-
-### 2. Set Up a Python Virtual Environment
-
-Create and activate a virtual environment to manage dependencies:
-
-**On macOS/Linux:**
-```bash
-python3 -m venv venv
-source venv/bin/activate
-```
-
-**On Windows:**
-```cmd
-python -m venv venv
-venv\Scripts\activate
-```
-
----
-
-### 3. Install Required Packages
-
-Install the `substrate-interface` library, which is used to interact with the Substrate node:
-
-```bash
-pip install substrate-interface
-```
-
-This will install the `substrateinterface` package and its dependencies.
-
----
-
-### 4. Configure the Application
-
-Edit the `main.py` file to set the WebSocket URL of your Substrate node:
-
-- Open `main.py` in a text editor.
-- Locate the `main()` function at the bottom of the file.
-- Update the `ws_url` variable to point to your Substrate node's WebSocket endpoint.  
-  For example:
-  ```python
-  ws_url = "ws://your-node:9944"
-  ```
-
----
-
-### 5. Run the Application
-
-With the virtual environment activated, run the script:
-
-```bash
-python main.py
-```
-
----
-
-## Run App With Kubernetes
-
-```bash
-minikube start
-eval $(minikube docker-env)
-docker build -t profile-pinner:latest .
-kubectl apply -f ipfs-pvc.yaml
-kubectl apply -f ipfs-deployment.yaml
-kubectl apply -f ipfs-service.yaml
-kubectl apply -f profile-pinner-deployment.yaml
+# Run Node in Docker
+docker run -d --name hippius-node \
+  --user 1000:1000 \
+  -p 30333:30333 -p 9933:9933 -p 9944:9944 -p 9615:9615 \
+  -v /opt/hippius/data:/data \
+  -v /opt/hippius/data/chains/hippius-testnet/network/secret_ed25519:/data/node-key \
+  hippius-node
 ```
