@@ -1,173 +1,130 @@
-# Hippius Network: The Next-Generation Decentralized Infrastructure
+# Hippius Desktop App
 
-## 🌐 Project Overview
+Hippius is a desktop application built with Next.js and Tauri for monitoring IPFS node status and blockchain performance. This application provides insights into network connections, node status, file storage, and blockchain metrics.
 
-Hippius Network is an advanced blockchain platform built on Substrate, designed to revolutionize decentralized computing with innovative reward mechanisms, robust governance, and multi-dimensional value creation.
+## 🚀 Technologies
 
-## 🔑 Key Features
+- **Frontend**: Next.js 15, React 19, TailwindCSS
+- **Desktop**: Tauri 2.0
+- **State Management**: Jotai
+- **Data Visualization**: Visx, React Circular Progressbar
+- **UI Components**: Radix UI
+- **3D Graphics**: Three.js, React Three Fiber
 
-### 💡 Unique Reward Distribution Model
+## ⚙️ Prerequisites
 
-#### Reward Allocation Breakdown
-- **Staking Rewards**: 20% of Marketplace Revenue
-- **Ranking Rewards**: 70% of Marketplace Revenue
-  - Split equally between two ranking pallets
-- **Treasury**: 10% of Marketplace Revenue
+Before you begin, make sure you have the following installed:
 
-#### Validator Reward Mechanism
-1. **Era-Based Distribution**
-   - Rewards calculated and distributed every 6-hour era
-   - Proportional allocation based on validator performance and stake
+- Node.js (v18 or newer)
+- pnpm (v9.12.3 or newer)
+- Rust (for Tauri)
+- Additional Tauri dependencies based on your OS:
+  - **macOS**: Xcode Command Line Tools
+  - **Windows**: Visual Studio with C++ build tools
+  - **Linux**: Various development packages (see [Tauri prerequisites](https://tauri.app/v2/guides/getting-started/prerequisites))
 
-2. **Reward Calculation**
-   - Base reward from marketplace economic activity
-   - Performance-based multipliers
-   - Stake-weighted distribution
+## 📦 Installation
 
-### 🏦 Economic Model
-- **Minimum Validator Stake**: Configurable
-- **Maximum Active Validators**: 1000
-- **Nomination Mechanism**: Flexible staking with up to 16 nominations per account
-
-### 🔒 Consensus & Security
-- **Consensus Algorithm**: Proof-of-Stake (PoS)
-- **Block Finality**: GRANDPA Finality Gadget
-- **Validator Selection**: Adaptive NPoS (Nominated Proof-of-Stake)
-
-## 🚀 Technical Specifications
-
-### Network Parameters
-- **Network Type**: Substrate-based Blockchain
-- **Token Decimals**: 18
-- **Era Duration**: 6 hours
-- **Bonding Period**: 28 days
-- **Unbonding Period**: 28 days
-- **Slash Defer Duration**: 27 days
-
-### Validator Requirements
-1. **Minimum Stake**
-   - Initial Validator Stake: Configurable
-   - Recommended Minimum: [Specify Exact Amount]
-
-2. **Performance Metrics**
-   - Uptime Tracking
-   - Slashing for Malicious Behavior
-   - Rewards Proportional to Consistent Performance
-
-## 💰 Economic Incentives
-
-### Reward Distribution Workflow
-
-Marketplace Revenue (100%) ├── Staking Rewards (20%) │ └── Distributed among Active Validators ├── Ranking Rewards (70%) │ ├── Ranking Pallet 1 (35%) │ └── Ranking Pallet 2 (35%) └── Treasury (10%)
-
-
-
-### Validator Reward Calculation
-1. **Base Reward Calculation**
-   - Total Era Revenue
-   - Number of Active Validators
-   - Individual Validator Performance
-
-2. **Reward Components**
-   - Base Stake Reward
-   - Performance Bonus
-   - Consistency Multiplier
-
-### 🛡️ Risk Management
-- **Slashing Mechanism**
-  - Penalties for Validator Misbehavior
-  - Progressive Slashing Rates
-- **Minimum Performance Threshold**
-
-## 📦 Installation & Setup
-
-### Prerequisites
-- Rust (latest stable)
-- Substrate Development Environment
-- Minimum Hardware:
-  - CPU: 4 cores
-  - RAM: 16GB
-  - Storage: 500GB SSD
-  - Bandwidth: 100 Mbps
-
-
-### Quick Start
-```bash
-# Clone Repository
-git clone https://github.com/thenervelab/thebrain.git
-cd thebrain
-
-# Install Dependencies
-rustup update
-rustup component add rust-src
-cargo build --release
-
-# Start Node
-./target/release/hippius-node 
-```
-
-
-### 🐳 Docker Quick Start
-
-> **Note:**  
-> - Ensure the `hippius-node` binary is present in the project root **before** building any Docker image.  
-> - Double-check that the keystore path and network file path are correct for your setup **before running** the container.
-
-
-## Pull Image from GitHub Container Registry
-
-You can pull the pre-built hippius-node image directly from GitHub Container Registry (GHCR):
-
-### Pull the latest image
-docker pull ghcr.io/thenervelab/thebrain/hippius-node:latest
-
-### Optionally, pull a specific version using the SHA tag (replace <SHA> with the desired tag)
-docker pull ghcr.io/thenervelab/thebrain/hippius-node:<SHA>
-
-## Build and run Image Locally
+1. Clone the repository:
 
 ```bash
-# Build Validator Docker Image
-docker build -t hippius-node .
-
-# Set permissions for data directory
-sudo chown -R $USER:$USER /opt/hippius/data
-chmod -R 777 /opt/hippius/data
+git clone https://github.com/yourusername/hippius-desktop.git
+cd hippius-desktop
 ```
 
-### Run as Validator Node
+2. Install dependencies using pnpm:
 
 ```bash
-
-# Run Validator Node in Docker
-docker run -d --name hippius-validator \
-  --user 1000:1000 \
-  -p 30333:30333 -p 9933:9933 -p 9944:9944 -p 9615:9615 \
-  -v /opt/hippius/data:/data \
-  -v /opt/hippius/data/chains/hippius-testnet/network/secret_ed25519:/data/node-key \
-  hippius-node \
-  --validator \                       
-  --rpc-methods=Unsafe \              
-  --name="hippius-testnet-validator" \   
-  --bootnodes=/ip4/91.134.72.142/tcp/30333/ws/p2p/12D3KooWRJdyfLdhPzyQrUHKWdEooNPsNFWRTfCS8tDSeysPDxVR
+pnpm install
 ```
 
-#### Miner Node
+3. Set up environment variables:
+
+Create a `.env.local` file in the root directory and configure your environment variables.
+
+## 🧑‍💻 Development
+
+### Web Development
+
+To start the Next.js development server:
 
 ```bash
-# Build Miner Docker Image
-docker build -t hippius-miner .
-
-# Set permissions for data directory
-sudo chown -R $USER:$USER /opt/hippius/data
-chmod -R 777 /opt/hippius/data
-
-# Run Miner Node in Docker
-docker run -d --name hippius-miner \
-  --user 1000:1000 \
-  -p 30333:30333 -p 9933:9933 -p 9944:9944 -p 9615:9615 \
-  -v /opt/hippius/data:/data \
-  -v /opt/hippius/data/chains/hippius-testnet/network/secret_ed25519:/data/node-key \
-  hippius-node
+pnpm dev
 ```
 
+This will start the development server at `http://localhost:3000`.
+
+### Desktop Development
+
+To develop the Tauri desktop application:
+
+```bash
+pnpm tauri dev
+```
+
+This command will start both the Next.js development server and the Tauri window that loads the web app.
+
+## 🏗️ Building for Production
+
+### Web Build
+
+To create a production build for web deployment:
+
+```bash
+pnpm build
+```
+
+This will generate static files in the `out` directory.
+
+### Desktop Build
+
+To build the desktop application:
+
+```bash
+pnpm tauri build
+```
+
+This will create platform-specific installers in the `src-tauri/target/release/bundle` directory.
+
+## 📁 Project Structure
+
+```
+hippius-desktop/
+├── app/                # Next.js app directory with pages and components
+├── components/         # Shared React components
+├── lib/                # Utility functions and shared logic
+├── public/             # Static files
+├── src-tauri/          # Tauri-specific code (Rust)
+│   ├── src/            # Rust source code
+│   └── tauri.conf.json # Tauri configuration
+└── package.json        # Project dependencies and scripts
+```
+
+## 🧪 Testing
+
+Run tests with:
+
+```bash
+pnpm test
+```
+
+## 🔑 Features
+
+- Real-time IPFS node monitoring
+- Blockchain status and metrics
+- File management and storage analytics
+- Network connection tracking
+- Upload/Download speed monitoring
+- Credit usage visualization
+
+## 📄 License
+
+[MIT](LICENSE)
+
+## 🙏 Acknowledgements
+
+- [Next.js](https://nextjs.org/)
+- [Tauri](https://tauri.app/)
+- [Polkadot.js](https://polkadot.js.org/)
+- [TailwindCSS](https://tailwindcss.com/)
+- [React Three Fiber](https://github.com/pmndrs/react-three-fiber)
